@@ -7,6 +7,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
 
@@ -36,6 +38,7 @@ public class MainActivity extends BasePermissionCheckActivity {
     private FragmentPagerAdapter fragmentPagerAdapter;
 
 
+    private int index = 0;
 
     @Override
     public void initView() {
@@ -61,26 +64,34 @@ public class MainActivity extends BasePermissionCheckActivity {
         ycViewPager.setOffscreenPageLimit(3);
 
 
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(loadPermissionsConfig(index++));
+            }
+        });
 
     }
 
     @Override
     protected RequestPermissionInfo loadPermissionsConfig() {
+        return null;
+    }
+
+    protected RequestPermissionInfo loadPermissionsConfig(int index) {
+        Log.e("fuck,index", index + "======>");
         RequestPermissionInfo requestPermissionInfo = new RequestPermissionInfo();
+        requestPermissionInfo.setPermissionTitle("title" + index);
         requestPermissionInfo.setPermissionMessage("请授权这些权限");
         requestPermissionInfo.setPermissionCancelText("取消");
         requestPermissionInfo.setPermissionSureText("确定");
+
         requestPermissionInfo.setAgainPermissionMessage("需要授权啊");
-        requestPermissionInfo.setAgainPermissionTitle("11");
+        requestPermissionInfo.setAgainPermissionTitle("11" + index);
         requestPermissionInfo.setAgainPermissionCancelText("取消");
         requestPermissionInfo.setAgainPermissionSureText("确定");
 
         requestPermissionInfo.setPermissionArr(new String[]{
-                Manifest.permission.CAMERA,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_CONTACTS,
-                Manifest.permission.READ_SMS,
-                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE});
         return requestPermissionInfo;
     }
@@ -88,19 +99,19 @@ public class MainActivity extends BasePermissionCheckActivity {
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         super.onPermissionsGranted(requestCode, perms);
-        ycPerLog.e("获取到了部分的权限" + new Gson().toJson(perms)+this);
+        ycPerLog.e("获取到了部分的权限" + new Gson().toJson(perms) + this);
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
-        ycPerLog.e("拒绝了部分的权限" + new Gson().toJson(perms)+this);
+        ycPerLog.e("拒绝了部分的权限" + new Gson().toJson(perms) + this);
     }
 
     @Override
     public void onGetAllPermission() {
         super.onGetAllPermission();
-        ycPerLog.e("获取到了所有的权限"+this);
+        ycPerLog.e("获取到了所有的权限" + this);
     }
 
 
@@ -108,7 +119,6 @@ public class MainActivity extends BasePermissionCheckActivity {
     private ViewPager ycViewPager;
     //所有的Fragment
     private ArrayList<Fragment> progressPageList = new ArrayList<>();
-
 
 
     /**
@@ -121,8 +131,6 @@ public class MainActivity extends BasePermissionCheckActivity {
 //        progressPageList.add(new MainFragment());
 //        progressPageList.add(new MainFragment());
     }
-
-
 
 
 }

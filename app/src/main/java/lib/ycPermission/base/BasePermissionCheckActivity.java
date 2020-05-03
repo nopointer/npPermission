@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import java.util.List;
 
 import npPermission.nopointer.core.RequestPermissionInfo;
-import npPermission.nopointer.core.YCPermissionRequester;
+import npPermission.nopointer.core.NpPermissionRequester;
 import npPermission.nopointer.core.callback.PermissionCallback;
 import npPermission.nopointer.log.ycPerLog;
 
@@ -18,16 +18,19 @@ import npPermission.nopointer.log.ycPerLog;
 
 public abstract class BasePermissionCheckActivity extends BaseActivity implements PermissionCallback {
 
-    private YCPermissionRequester ycPermissionRequester = null;
+    private NpPermissionRequester ycPermissionRequester = null;
 
     public void requestPermission(RequestPermissionInfo requestPermissionInfo) {
         if (requestPermissionInfo == null) {
             ycPerLog.e("权限列表为空，不请求");
             return;
         }
-        if (ycPermissionRequester == null) {
-            ycPermissionRequester = new YCPermissionRequester(requestPermissionInfo);
+        if (ycPermissionRequester==null){
+            ycPermissionRequester = new NpPermissionRequester(requestPermissionInfo);
+        }else {
+            ycPermissionRequester.setPermissionInfo(requestPermissionInfo);
         }
+
         ycPermissionRequester.requestPermission(this, this);
     }
 

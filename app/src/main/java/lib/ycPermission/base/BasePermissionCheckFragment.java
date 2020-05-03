@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import java.util.List;
 
 import npPermission.nopointer.core.RequestPermissionInfo;
-import npPermission.nopointer.core.YCPermissionRequester;
+import npPermission.nopointer.core.NpPermissionRequester;
 import npPermission.nopointer.core.callback.PermissionCallback;
 import npPermission.nopointer.log.ycPerLog;
 
@@ -18,7 +18,7 @@ import npPermission.nopointer.log.ycPerLog;
 
 public abstract class BasePermissionCheckFragment extends BaseFragment implements PermissionCallback {
 
-    private YCPermissionRequester ycPermissionRequester = null;
+    private NpPermissionRequester ycPermissionRequester = null;
 
     public void requestPermission(RequestPermissionInfo requestPermissionInfo) {
 
@@ -27,7 +27,7 @@ public abstract class BasePermissionCheckFragment extends BaseFragment implement
             return;
         }
         if (ycPermissionRequester == null) {
-            ycPermissionRequester = new YCPermissionRequester(requestPermissionInfo);
+            ycPermissionRequester = new NpPermissionRequester(requestPermissionInfo);
         }
         ycPermissionRequester.requestPermission(this, this);
     }

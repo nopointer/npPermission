@@ -29,6 +29,10 @@ abstract class AbsPermsRequester {
         this.permissionInfo = permissionInfo;
     }
 
+    public void setPermissionInfo(RequestPermissionInfo permissionInfo) {
+        this.permissionInfo = permissionInfo;
+    }
+
     public RequestPermissionInfo getPermissionInfo() {
         return permissionInfo;
     }
