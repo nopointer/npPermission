@@ -80,13 +80,13 @@ public class NpPermissionRequester extends AbsPermsRequester {
                 .create();
         aginDialog.setCancelable(false);
         aginDialog.setCanceledOnTouchOutside(false);
-        aginDialog.show();
         if (!TextUtils.isEmpty(permissionInfo.getAgainPermissionTitle())) {
             aginDialog.setTitle(permissionInfo.getAgainPermissionTitle());
         }
         if (!TextUtils.isEmpty(permissionInfo.getAgainPermissionMessage())) {
             aginDialog.setMessage(permissionInfo.getAgainPermissionMessage());
         }
+        aginDialog.show();
     }
 
 
