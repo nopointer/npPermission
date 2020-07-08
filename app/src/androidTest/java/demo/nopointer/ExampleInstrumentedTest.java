@@ -1,4 +1,4 @@
-package lib.ycPermission;
+package demo.nopointer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

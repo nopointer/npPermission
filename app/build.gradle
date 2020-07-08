@@ -4,7 +4,7 @@ android {
     compileSdkVersion var.compileSdkVersion
 
     defaultConfig {
-        applicationId "simaple.ycPermission"
+        applicationId "demo.nopointer.npPermission"
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
         versionCode 1

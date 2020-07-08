@@ -1,4 +1,4 @@
-package lib.ycPermission.base;
+package demo.nopointer.npPermission.base;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package lib.ycPermission;
+package demo.nopointer;
 
 import org.junit.Test;
 

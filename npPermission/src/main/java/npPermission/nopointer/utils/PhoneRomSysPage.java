@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import npPermission.nopointer.log.ycPerLog;
+import npPermission.nopointer.log.NpPerLog;
+
 
 public class PhoneRomSysPage {
 
@@ -26,7 +27,7 @@ public class PhoneRomSysPage {
         } else if (romName.equalsIgnoreCase("VIVO")) {
             goToVIVOSettingsPage(context, pageType);
         }
-        ycPerLog.d( "romName==>" + romName);
+        NpPerLog.log( "romName==>" + romName);
     }
 
 
@@ -49,7 +50,7 @@ public class PhoneRomSysPage {
                 intent.setComponent(componentName);
                 context.startActivity(intent);
             } else {
-                ycPerLog.d( "小米手机：componentName=null");
+                NpPerLog.log( "小米手机：componentName=null");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +85,7 @@ public class PhoneRomSysPage {
                 intent.setComponent(componentName);
                 context.startActivity(intent);
             } else {
-                ycPerLog.d( "华为手机：componentName=null");
+                NpPerLog.log( "华为手机：componentName=null");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +116,7 @@ public class PhoneRomSysPage {
                 intent.setComponent(componentName);
                 context.startActivity(intent);
             } else {
-                ycPerLog.d("oppo手机：componentName=null");
+                NpPerLog.log("oppo手机：componentName=null");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,7 +152,7 @@ public class PhoneRomSysPage {
                 intent.setComponent(componentName);
                 context.startActivity(intent);
             } else {
-                ycPerLog.d( "vivo手机：componentName=null");
+                NpPerLog.log( "vivo手机：componentName=null");
             }
         } catch (Exception e) {
             e.printStackTrace();

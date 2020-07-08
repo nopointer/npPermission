@@ -1,4 +1,4 @@
-package lib.ycPermission;
+package demo.nopointer.npPermission;
 
 import android.Manifest;
 import android.view.View;
@@ -7,10 +7,10 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-import lib.ycPermission.base.BasePermissionCheckFragment;
+import demo.nopointer.npPermission.base.BasePermissionCheckFragment;
+import npPermission.nopointer.log.NpPerLog;
 import simaple.ycPermission.R;
 import npPermission.nopointer.core.RequestPermissionInfo;
-import npPermission.nopointer.log.ycPerLog;
 import npPermission.nopointer.utils.PermissionPageUtils;
 
 public class MainFragment extends BasePermissionCheckFragment {
@@ -59,19 +59,19 @@ public class MainFragment extends BasePermissionCheckFragment {
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         super.onPermissionsGranted(requestCode, perms);
-        ycPerLog.e("获取到了部分的权限" + new Gson().toJson(perms) + this);
+        NpPerLog.log("获取到了部分的权限" + new Gson().toJson(perms) + this);
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
-        ycPerLog.e("拒绝了部分的权限" + new Gson().toJson(perms) + this);
+        NpPerLog.log("拒绝了部分的权限" + new Gson().toJson(perms) + this);
     }
 
     @Override
     public void onGetAllPermission() {
         super.onGetAllPermission();
-        ycPerLog.e("获取到了所有的权限" + this);
+        NpPerLog.log("获取到了所有的权限" + this);
     }
 
 

@@ -1,4 +1,4 @@
-package lib.ycPermission.base;
+package demo.nopointer.npPermission.base;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -8,7 +8,7 @@ import java.util.List;
 import npPermission.nopointer.core.RequestPermissionInfo;
 import npPermission.nopointer.core.NpPermissionRequester;
 import npPermission.nopointer.core.callback.PermissionCallback;
-import npPermission.nopointer.log.ycPerLog;
+import npPermission.nopointer.log.NpPerLog;
 
 
 /**
@@ -16,31 +16,33 @@ import npPermission.nopointer.log.ycPerLog;
  * 权限检测器
  */
 
-public abstract class BasePermissionCheckActivity extends BaseActivity implements PermissionCallback {
+public abstract class BasePermissionCheckFragment extends BaseFragment implements PermissionCallback {
 
     private NpPermissionRequester ycPermissionRequester = null;
 
     public void requestPermission(RequestPermissionInfo requestPermissionInfo) {
+
         if (requestPermissionInfo == null) {
-            ycPerLog.e("权限列表为空，不请求");
+            NpPerLog.log("权限列表为空，不请求");
             return;
         }
-        if (ycPermissionRequester==null){
+        if (ycPermissionRequester == null) {
             ycPermissionRequester = new NpPermissionRequester(requestPermissionInfo);
-        }else {
-            ycPermissionRequester.setPermissionInfo(requestPermissionInfo);
         }
-
         ycPermissionRequester.requestPermission(this, this);
     }
 
+
     @Override
-    public void initView() {
+    protected void initView() {
 //        requestPermission(loadPermissionsConfig());
     }
 
 
-    protected abstract RequestPermissionInfo loadPermissionsConfig();
+    protected RequestPermissionInfo loadPermissionsConfig() {
+        return null;
+    }
+
 
     /**
      * 用户权限处理,
@@ -75,4 +77,5 @@ public abstract class BasePermissionCheckActivity extends BaseActivity implement
             ycPermissionRequester.checkDeniedPermissionsNeverAskAgain(this, perms);
         }
     }
+
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npPermission.nopointer.core.callback.PermissionCallback;
-import npPermission.nopointer.log.ycPerLog;
+import npPermission.nopointer.log.NpPerLog;
 
 /**
  * Created by nopointer on 2018/8/21.
@@ -53,7 +53,7 @@ abstract class AbsPermsRequester {
     //在activty里面请求权限
     public <T extends Activity> void requestPermission(T activity, PermissionCallback permissionCallback) {
         if (permissionInfo == null || permissionInfo.getPermissionArr() == null) {
-            ycPerLog.e("权限请求的内容为空！！！");
+            NpPerLog.log("权限请求的内容为空！！！");
             return;
         }
         if (hasPermissions(activity, permissionInfo.getPermissionArr())) {
@@ -67,10 +67,10 @@ abstract class AbsPermsRequester {
 
     //在fragment里面请求权限
     public <T extends Fragment> void requestPermission(T fragment, PermissionCallback permissionCallback) {
-        ycPerLog.e("permissionInfo==>" + permissionInfo.toString());
+        NpPerLog.log("permissionInfo==>" + permissionInfo.toString());
 
         if (permissionInfo == null || permissionInfo.getPermissionArr() == null) {
-            ycPerLog.e("权限请求的内容为空！！！");
+            NpPerLog.log("权限请求的内容为空！！！");
             return;
         }
         if (hasPermissions(fragment, permissionInfo.getPermissionArr())) {

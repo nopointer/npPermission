@@ -10,7 +10,10 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.List;
+
+import npPermission.nopointer.core.callback.PermissionCallback;
 
 /**
  * Created by nopointer on 2018/8/20.
@@ -22,7 +25,6 @@ public class NpPermissionRequester extends AbsPermsRequester {
     public NpPermissionRequester(RequestPermissionInfo permissionInfo) {
         super(permissionInfo);
     }
-
 
 
     @Override
@@ -37,9 +39,21 @@ public class NpPermissionRequester extends AbsPermsRequester {
                             permissionInfo.getPermissionDialogCallback().onSure(false);
                         }
                     }
+                }).setNegativeButton(permissionInfo.getPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // act as if the permissions were denied
+                        if (activity instanceof PermissionCallback) {
+                            ((PermissionCallback) activity).onPermissionsDenied(permissionInfo.getRequestCode(), Arrays.asList(permissionInfo.getPermissionArr()));
+                        }
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(false);
+                        }
+                    }
                 }).create();
         Log.e("fuck,firstDialog", firstDialog.toString());
-        Log.e("fuck,permissionInfo", permissionInfo +"///"+ permissionInfo.toString());
+        Log.e("fuck,permissionInfo", permissionInfo + "///" + permissionInfo.toString());
         firstDialog.setCancelable(false);
         firstDialog.setCanceledOnTouchOutside(false);
         if (!TextUtils.isEmpty(permissionInfo.getPermissionTitle())) {
@@ -67,16 +81,16 @@ public class NpPermissionRequester extends AbsPermsRequester {
                         }
                     }
                 })
-//                    .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
-//                                permissionInfo.getPermissionDialogCallback().onCancel(true);
-//                            }
-//
-//                        }
-//                    })
+                .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(true);
+                        }
+
+                    }
+                })
                 .create();
         aginDialog.setCancelable(false);
         aginDialog.setCanceledOnTouchOutside(false);
@@ -103,19 +117,19 @@ public class NpPermissionRequester extends AbsPermsRequester {
                         }
                     }
                 })
-//                    .setNegativeButton(permissionInfo.getPermissionCancelText(), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            // act as if the permissions were denied
-//                            if (fragment instanceof PermissionCallback) {
-//                                ((PermissionCallback) fragment).onPermissionsDenied(permissionInfo.getRequestCode(), Arrays.asList(permissionInfo.getPermissionArr()));
-//                            }
-//                            if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
-//                                permissionInfo.getPermissionDialogCallback().onCancel(false);
-//                            }
-//                        }
-//                    })
+                .setNegativeButton(permissionInfo.getPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // act as if the permissions were denied
+                        if (fragment instanceof PermissionCallback) {
+                            ((PermissionCallback) fragment).onPermissionsDenied(permissionInfo.getRequestCode(), Arrays.asList(permissionInfo.getPermissionArr()));
+                        }
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(false);
+                        }
+                    }
+                })
                 .create();
         if (!TextUtils.isEmpty(permissionInfo.getPermissionTitle())) {
             firstDialog.setTitle(permissionInfo.getPermissionTitle());
@@ -143,15 +157,15 @@ public class NpPermissionRequester extends AbsPermsRequester {
                         }
                     }
                 })
-//                    .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
-//                                permissionInfo.getPermissionDialogCallback().onCancel(true);
-//                            }
-//                        }
-//                    })
+                .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(true);
+                        }
+                    }
+                })
                 .create();
         if (!TextUtils.isEmpty(permissionInfo.getAgainPermissionTitle())) {
             aginDialog.setTitle(permissionInfo.getAgainPermissionTitle());
@@ -178,19 +192,19 @@ public class NpPermissionRequester extends AbsPermsRequester {
                         }
                     }
                 })
-//                    .setNegativeButton(permissionInfo.getPermissionCancelText(), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            // act as if the permissions were denied
-//                            if (fragment instanceof PermissionCallback) {
-//                                ((PermissionCallback) fragment).onPermissionsDenied(permissionInfo.getRequestCode(), Arrays.asList(permissionInfo.getPermissionArr()));
-//                            }
-//                            if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
-//                                permissionInfo.getPermissionDialogCallback().onCancel(false);
-//                            }
-//                        }
-//                    })
+                .setNegativeButton(permissionInfo.getPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // act as if the permissions were denied
+                        if (fragment instanceof PermissionCallback) {
+                            ((PermissionCallback) fragment).onPermissionsDenied(permissionInfo.getRequestCode(), Arrays.asList(permissionInfo.getPermissionArr()));
+                        }
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(false);
+                        }
+                    }
+                })
                 .create();
         if (!TextUtils.isEmpty(permissionInfo.getPermissionTitle())) {
             firstDialog.setTitle(permissionInfo.getPermissionTitle());
@@ -218,15 +232,15 @@ public class NpPermissionRequester extends AbsPermsRequester {
                         }
                     }
                 })
-//                    .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
-//                                permissionInfo.getPermissionDialogCallback().onCancel(true);
-//                            }
-//                        }
-//                    })
+                .setNegativeButton(permissionInfo.getAgainPermissionCancelText(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (permissionInfo != null && permissionInfo.getPermissionDialogCallback() != null) {
+                            permissionInfo.getPermissionDialogCallback().onCancel(true);
+                        }
+                    }
+                })
                 .create();
         if (!TextUtils.isEmpty(permissionInfo.getAgainPermissionTitle())) {
             aginDialog.setTitle(permissionInfo.getAgainPermissionTitle());

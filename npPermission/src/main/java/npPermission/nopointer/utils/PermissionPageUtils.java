@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import npPermission.nopointer.log.ycPerLog;
+import npPermission.nopointer.log.NpPerLog;
 
 /**
  * 权限工具，用于跳转各个平台的权限管理页面
@@ -29,7 +29,7 @@ public class PermissionPageUtils {
     public static void jumpPermissionPage(Context context) {
         String name = Build.MANUFACTURER.toUpperCase();
         String packageName = context.getPackageName();
-        ycPerLog.e("jumpPermissionPage --- name : " + name);
+        NpPerLog.log("jumpPermissionPage --- name : " + name);
         try {
             switch (name) {
                 case "HUAWEI":
@@ -82,7 +82,7 @@ public class PermissionPageUtils {
             intent.setComponent(comp);
             mContext.startActivity(intent);
         } catch (Exception e) {
-            ycPerLog.e("跳转失败" + e.getMessage());
+            NpPerLog.log("跳转失败" + e.getMessage());
             e.printStackTrace();
             goIntentSetting(mContext);
         }
@@ -95,7 +95,7 @@ public class PermissionPageUtils {
             intent.setComponent(comp);
             mContext.startActivity(intent);
         } catch (Exception e) {
-            ycPerLog.e("跳转失败" + e.getMessage());
+            NpPerLog.log("跳转失败" + e.getMessage());
             e.printStackTrace();
             goIntentSetting(mContext);
         }
@@ -109,7 +109,7 @@ public class PermissionPageUtils {
             intent.setComponent(comp);
             mContext.startActivity(intent);
         } catch (Exception e) {
-            ycPerLog.e("跳转失败" + e.getMessage());
+            NpPerLog.log("跳转失败" + e.getMessage());
             e.printStackTrace();
             goIntentSetting(mContext);
         }
@@ -140,7 +140,7 @@ public class PermissionPageUtils {
 
     private static void goXiaoMiMainager(String packageName, Context mContext) {
         String rom = getMiuiVersion();
-        ycPerLog.e("goMiaoMiMainager --- rom : " + rom);
+        NpPerLog.log("goMiaoMiMainager --- rom : " + rom);
         Intent intent = new Intent();
         if ("V6".equals(rom) || "V7".equals(rom)) {
             intent.setAction("miui.intent.action.APP_PERM_EDITOR");
@@ -242,9 +242,9 @@ public class PermissionPageUtils {
             // 通过getPackageManager()的queryIntentActivities方法遍历
             List<ResolveInfo> resolveinfoList = mContext.getPackageManager()
                     .queryIntentActivities(resolveIntent, 0);
-            ycPerLog.e("resolveinfoList" + resolveinfoList.size());
+            NpPerLog.log("resolveinfoList" + resolveinfoList.size());
             for (int i = 0; i < resolveinfoList.size(); i++) {
-                ycPerLog.e(resolveinfoList.get(i).activityInfo.packageName + resolveinfoList.get(i).activityInfo.name);
+                NpPerLog.log(resolveinfoList.get(i).activityInfo.packageName + resolveinfoList.get(i).activityInfo.name);
             }
             ResolveInfo resolveinfo = resolveinfoList.iterator().next();
             if (resolveinfo != null) {
