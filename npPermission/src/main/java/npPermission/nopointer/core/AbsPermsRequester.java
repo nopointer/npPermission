@@ -107,24 +107,53 @@ abstract class AbsPermsRequester {
 
 
     public boolean checkDeniedPermissionsNeverAskAgain(final Object object, List<String> deniedPerms) {
+
+        if (object == null) return true;
+
         boolean shouldShowRationale;
         for (String perm : deniedPerms) {
             shouldShowRationale = shouldShowRequestPermissionRationale(object, perm);
+            NpPerLog.log(perm + "///" + shouldShowRationale);
             if (!shouldShowRationale) {
-
-                if (object == null) return true;
                 if (object instanceof Activity) {
-                    cfgPermissionInfoDialogForNeverAsk((Activity) object, permissionInfo, deniedPerms);
+                    if (!hasPermissions((Activity) object, perm)) {
+                        cfgPermissionInfoDialogForNeverAsk((Activity) object, permissionInfo, deniedPerms);
+                    }
                 } else if (object instanceof Fragment) {
-                    cfgPermissionInfoDialogForNeverAsk((Fragment) object, permissionInfo, deniedPerms);
+                    if (!hasPermissions(((Fragment) object).getActivity(), perm)) {
+                        cfgPermissionInfoDialogForNeverAsk((Fragment) object, permissionInfo, deniedPerms);
+                    }
                 } else if (object instanceof android.app.Fragment) {
-                    cfgPermissionInfoDialogForNeverAsk((android.app.Fragment) object, permissionInfo, deniedPerms);
+                    if (!hasPermissions(((android.app.Fragment) object).getActivity(), perm)) {
+                        cfgPermissionInfoDialogForNeverAsk((android.app.Fragment) object, permissionInfo, deniedPerms);
+                    }
                 }
                 return true;
             }
         }
 
         return false;
+
+
+//        boolean shouldShowRationale;
+//        for (String perm : deniedPerms) {
+//            shouldShowRationale = shouldShowRequestPermissionRationale(object, perm);
+//            NpPerLog.log(perm + "///" + shouldShowRationale);
+//            if (!shouldShowRationale) {
+//
+//                if (object == null) return true;
+//                if (object instanceof Activity) {
+//                    cfgPermissionInfoDialogForNeverAsk((Activity) object, permissionInfo, deniedPerms);
+//                } else if (object instanceof Fragment) {
+//                    cfgPermissionInfoDialogForNeverAsk((Fragment) object, permissionInfo, deniedPerms);
+//                } else if (object instanceof android.app.Fragment) {
+//                    cfgPermissionInfoDialogForNeverAsk((android.app.Fragment) object, permissionInfo, deniedPerms);
+//                }
+//                return true;
+//            }
+//        }
+//
+//        return false;
     }
 
 
@@ -171,6 +200,17 @@ abstract class AbsPermsRequester {
     }
 
 
+    /**
+     * shouldShowRequestPermissionRationale
+     * 1，在允许询问时返回true ；
+     * 2，在权限通过 或者权限被拒绝并且禁止询问时返回false 但是有一个例外，就是重来没有询问过的时候，
+     * 也是返回的false 所以单纯的使用shouldShowRequestPermissionRationale去做什么判断，是没用的，只能在请求权限回调后再使用。
+     * Google的原意是：
+     * 1，没有申请过权限，申请就是了，所以返回false；
+     * 2，申请了用户拒绝了，那你就要提示用户了，所以返回true；
+     * 3，用户选择了拒绝并且不再提示，那你也不要申请了，也不要提示用户了，所以返回false；
+     * 4，已经允许了，不需要申请也不需要提示，所以返回false；1年前举报回复回复
+     */
     @TargetApi(23)
     protected static boolean shouldShowRequestPermissionRationale(Object object, String perm) {
         if (object instanceof Activity) {

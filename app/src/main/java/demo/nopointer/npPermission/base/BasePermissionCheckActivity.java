@@ -3,6 +3,8 @@ package demo.nopointer.npPermission.base;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import npPermission.nopointer.core.RequestPermissionInfo;
@@ -25,9 +27,9 @@ public abstract class BasePermissionCheckActivity extends BaseActivity implement
             NpPerLog.log("权限列表为空，不请求");
             return;
         }
-        if (ycPermissionRequester==null){
+        if (ycPermissionRequester == null) {
             ycPermissionRequester = new NpPermissionRequester(requestPermissionInfo);
-        }else {
+        } else {
             ycPermissionRequester.setPermissionInfo(requestPermissionInfo);
         }
 
@@ -39,8 +41,6 @@ public abstract class BasePermissionCheckActivity extends BaseActivity implement
 //        requestPermission(loadPermissionsConfig());
     }
 
-
-    protected abstract RequestPermissionInfo loadPermissionsConfig();
 
     /**
      * 用户权限处理,
@@ -61,18 +61,25 @@ public abstract class BasePermissionCheckActivity extends BaseActivity implement
 
     @Override
     public void onGetAllPermission() {
+        NpPerLog.log("所有权限得到");
     }
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
+        NpPerLog.log("部分权限得到" + new Gson().toJson(perms));
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (ycPermissionRequester == null) return;
+        NpPerLog.log("部分权限拒绝" + new Gson().toJson(perms));
+        if (ycPermissionRequester == null) {
+            NpPerLog.log("ycPermissionRequester==null:" + (ycPermissionRequester == null));
+            return;
+        }
         RequestPermissionInfo requestPermissionInfo = ycPermissionRequester.getPermissionInfo();
         if (requestPermissionInfo != null && !TextUtils.isEmpty(requestPermissionInfo.getAgainPermissionMessage())) {
             ycPermissionRequester.checkDeniedPermissionsNeverAskAgain(this, perms);
+            NpPerLog.log("继续请求");
         }
     }
 }

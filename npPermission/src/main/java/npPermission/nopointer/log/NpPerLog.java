@@ -6,7 +6,13 @@ import android.util.Log;
 public class NpPerLog {
 
 
+    /**
+     * 是否允许log
+     */
+    public static boolean enableLog = true;
+
     public static void log(String message) {
+        if (!enableLog)return;
         if (mNpPerLogPrinter != null) {
             log(mNpPerLogPrinter.initTag(), message);
         } else {
@@ -16,6 +22,7 @@ public class NpPerLog {
     }
 
     public static void log(String tag, String message) {
+        if (!enableLog)return;
         if (TextUtils.isEmpty(tag)) {
             tag = "NpPerLog";
         }

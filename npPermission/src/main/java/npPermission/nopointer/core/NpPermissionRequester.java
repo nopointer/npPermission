@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import npPermission.nopointer.core.callback.PermissionCallback;
+import npPermission.nopointer.log.NpPerLog;
 
 /**
  * Created by nopointer on 2018/8/20.
@@ -101,6 +102,7 @@ public class NpPermissionRequester extends AbsPermsRequester {
             aginDialog.setMessage(permissionInfo.getAgainPermissionMessage());
         }
         aginDialog.show();
+        NpPerLog.log("显示再次询问对话框");
     }
 
 

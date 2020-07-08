@@ -7,7 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import demo.nopointer.npPermission.base.BasePermissionCheckActivity;
+import npPermission.nopointer.core.callback.PermissionDialogCallback;
 import npPermission.nopointer.log.NpPerLog;
 import simaple.ycPermission.R;
 import npPermission.nopointer.core.RequestPermissionInfo;
@@ -37,8 +37,6 @@ public class MainActivity extends BasePermissionCheckActivity {
     //适配器
     private FragmentPagerAdapter fragmentPagerAdapter;
 
-
-    private int index = 0;
 
     @Override
     public void initView() {
@@ -67,52 +65,43 @@ public class MainActivity extends BasePermissionCheckActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermission(loadPermissionsConfig(index++));
+                requestPermission();
             }
         });
 
+        requestPermission();
+
     }
 
-    @Override
-    protected RequestPermissionInfo loadPermissionsConfig() {
-        return null;
-    }
 
-    protected RequestPermissionInfo loadPermissionsConfig(int index) {
-        Log.e("fuck,index", index + "======>");
+
+    protected void requestPermission() {
         RequestPermissionInfo requestPermissionInfo = new RequestPermissionInfo();
-        requestPermissionInfo.setPermissionTitle("title" + index);
+        requestPermissionInfo.setPermissionTitle("title");
         requestPermissionInfo.setPermissionMessage("请授权这些权限");
         requestPermissionInfo.setPermissionCancelText("取消");
         requestPermissionInfo.setPermissionSureText("确定");
 
         requestPermissionInfo.setAgainPermissionMessage("需要授权啊");
-        requestPermissionInfo.setAgainPermissionTitle("11" + index);
+        requestPermissionInfo.setAgainPermissionTitle("11" );
         requestPermissionInfo.setAgainPermissionCancelText("取消");
         requestPermissionInfo.setAgainPermissionSureText("确定");
 
         requestPermissionInfo.setPermissionArr(new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE});
-        return requestPermissionInfo;
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CALL_LOG
+        });
+
+        requestPermissionInfo.setPermissionDialogCallback(new PermissionDialogCallback() {
+            @Override
+            public void onCancel(boolean isAgainAsk) {
+
+            }
+        });
+        requestPermission(requestPermissionInfo);
     }
 
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        super.onPermissionsGranted(requestCode, perms);
-        NpPerLog.log("获取到了部分的权限" + new Gson().toJson(perms) + this);
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        super.onPermissionsDenied(requestCode, perms);
-        NpPerLog.log("拒绝了部分的权限" + new Gson().toJson(perms) + this);
-    }
-
-    @Override
-    public void onGetAllPermission() {
-        super.onGetAllPermission();
-        NpPerLog.log("获取到了所有的权限" + this);
-    }
 
 
     //自定义Viewpager，不可左右滑动
