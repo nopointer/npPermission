@@ -118,17 +118,19 @@ abstract class AbsPermsRequester {
                 if (object instanceof Activity) {
                     if (!hasPermissions((Activity) object, perm)) {
                         cfgPermissionInfoDialogForNeverAsk((Activity) object, permissionInfo, deniedPerms);
+                        return true;
                     }
                 } else if (object instanceof Fragment) {
                     if (!hasPermissions(((Fragment) object).getActivity(), perm)) {
                         cfgPermissionInfoDialogForNeverAsk((Fragment) object, permissionInfo, deniedPerms);
+                        return true;
                     }
                 } else if (object instanceof android.app.Fragment) {
                     if (!hasPermissions(((android.app.Fragment) object).getActivity(), perm)) {
                         cfgPermissionInfoDialogForNeverAsk((android.app.Fragment) object, permissionInfo, deniedPerms);
+                        return true;
                     }
                 }
-                return true;
             }
         }
 
