@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
 import java.util.List;
 
 import npPermission.nopointer.core.RequestPermissionInfo;
@@ -78,7 +79,7 @@ public abstract class BasePermissionCheckActivity extends BaseActivity implement
         }
         RequestPermissionInfo requestPermissionInfo = ycPermissionRequester.getPermissionInfo();
         if (requestPermissionInfo != null && !TextUtils.isEmpty(requestPermissionInfo.getAgainPermissionMessage())) {
-            ycPermissionRequester.checkDeniedPermissionsNeverAskAgain(this, perms);
+            ycPermissionRequester.checkDeniedPermissionsNeverAskAgain(this, Arrays.asList(requestPermissionInfo.getPermissionArr()));
             NpPerLog.log("继续请求");
         }
     }

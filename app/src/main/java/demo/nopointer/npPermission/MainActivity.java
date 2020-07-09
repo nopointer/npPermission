@@ -1,33 +1,22 @@
 package demo.nopointer.npPermission;
 
 import android.Manifest;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import demo.nopointer.npPermission.base.BasePermissionCheckActivity;
+import npPermission.nopointer.core.RequestPermissionInfo;
 import npPermission.nopointer.core.callback.PermissionDialogCallback;
 import npPermission.nopointer.log.NpPerLog;
 import simaple.ycPermission.R;
-import npPermission.nopointer.core.RequestPermissionInfo;
 
 
 public class MainActivity extends BasePermissionCheckActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public int loadLayout() {
@@ -82,8 +71,8 @@ public class MainActivity extends BasePermissionCheckActivity {
         requestPermissionInfo.setPermissionCancelText("取消");
         requestPermissionInfo.setPermissionSureText("确定");
 
-        requestPermissionInfo.setAgainPermissionMessage("需要授权啊");
-        requestPermissionInfo.setAgainPermissionTitle("11" );
+        requestPermissionInfo.setAgainPermissionMessage("需要授权啊 agin");
+        requestPermissionInfo.setAgainPermissionTitle("11 agin" );
         requestPermissionInfo.setAgainPermissionCancelText("取消");
         requestPermissionInfo.setAgainPermissionSureText("确定");
 
@@ -96,7 +85,7 @@ public class MainActivity extends BasePermissionCheckActivity {
         requestPermissionInfo.setPermissionDialogCallback(new PermissionDialogCallback() {
             @Override
             public void onCancel(boolean isAgainAsk) {
-
+                NpPerLog.log("取消确认授权的dialog");
             }
         });
         requestPermission(requestPermissionInfo);
